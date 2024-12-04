@@ -16,4 +16,13 @@ class ListArtikels extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    public function mount(): void
+    {
+        parent::mount();
+
+        // Create an instance of the resource and call the method
+        $resource = new ArtikelResource();
+        $resource->syncFromApi();
+    }
 }

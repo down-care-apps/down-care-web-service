@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Http;
 
 class AccountResource extends Resource
 {
@@ -93,6 +94,42 @@ class AccountResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function syncFromApi()
+    {
+        try {
+            // Send GET request to the API
+            $response = Http::get('https://api-f3eusviapa-uc.a.run.app/users/');
+
+            // Check if the request was successful
+            if ($response->successful()) {
+                $data = $response->json(); // Get the response data as an array
+
+                // Iterate through each account data and update or create in the database
+                foreach ($data as $account) {
+                    Account::updateOrCreate(
+                        ['email' => $account['email']], // Check if the account already exists
+                        [
+                            'name' => $account['name'],
+                            'displayName' => $account['displayName'] ?? null,
+                            'phoneNumber' => $account['phoneNumber'] ?? null,
+                            'photoURL' => $account['photoURL'] ?? null,
+                            'age' => $account['age'] ?? null,
+                            'createAt' => $account['createAt'] ?? now(),
+                        ]
+                    );
+                }
+                // Return a success message or notification if necessary
+                session()->flash('success', 'Accounts synced successfully!');
+            } else {
+                // Handle failure (e.g., if the API request fails)
+                session()->flash('error', 'Failed to fetch accounts from API.');
+            }
+        } catch (\Exception $e) {
+            // Handle any exception (network error, unexpected issue)
+            session()->flash('error', 'An error occurred while syncing: ' . $e->getMessage());
+        }
     }
 
     public static function getRelations(): array
