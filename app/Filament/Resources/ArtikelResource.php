@@ -54,12 +54,10 @@ class ArtikelResource extends Resource
     public function syncFromApi()
     {
         try {
-            // Send GET request to the API
             $response = Http::get('https://api-f3eusviapa-uc.a.run.app/articles/');
-            $data = $response->json(); // Parse the response data into an array
+            $data = $response->json();
 
             if ($response->successful()) {
-                // Iterate through each article data and update or create in the database
                 foreach ($data as $article) {
                     Artikel::updateOrCreate(
                         [
@@ -74,11 +72,9 @@ class ArtikelResource extends Resource
 
                 session()->flash('success', 'Accounts synced successfully!');
             } else {
-                // Handle failure (e.g., if the API request fails)
                 session()->flash('error', 'Failed to fetch accounts from API.');
             }
         } catch (\Exception $e) {
-            // Handle any exception (network error, unexpected issue)
             session()->flash('error', 'An error occurred while syncing: ' . $e->getMessage());
         }
     }
