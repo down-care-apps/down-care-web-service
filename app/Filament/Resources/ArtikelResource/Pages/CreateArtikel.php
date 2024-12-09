@@ -17,7 +17,7 @@ class CreateArtikel extends CreateRecord
         $payload = [
             'category' => $data['category'],
             'content' => $data['content'],
-            'date' => now()->format('Y-m-d H:i:s'),
+            // 'date' => now()->format('Y-m-d H:i:s'),
             'thumbnailURL' => $data['thumbnailURL'],
             'title' => $data['title'],
         ];

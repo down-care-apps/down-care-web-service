@@ -34,10 +34,10 @@ class ArtikelResource extends Resource
                     ->nullable()
                     ->maxLength(255),
 
-                Forms\Components\DateTimePicker::make('date')
-                    ->label('Date')
-                    ->nullable()
-                    ->required(),
+                // Forms\Components\DateTimePicker::make('date')
+                //     ->label('Date')
+                //     ->nullable()
+                //     ->required(),
 
                 Forms\Components\TextInput::make('thumbnailURL')
                     ->label('Thumbnail URL')

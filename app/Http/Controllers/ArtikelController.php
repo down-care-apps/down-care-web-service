@@ -3,22 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artikel;
+use App\Http\Requests\StoreArtikelRequest;
 use App\Http\Requests\UpdateArtikelRequest;
 
 class ArtikelController extends Controller
 {
-    public function edit($id)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $artikel = Artikel::findOrFail($id);
-        return view('edit', compact('artikel'));
+        //
     }
 
-    public function update(UpdateArtikelRequest $request, $id)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        $artikel = Artikel::findOrFail($id);
-        $artikel->update($request->validated());
+        //
+    }
 
-        return redirect()->route('artikels.index')
-            ->with('success', 'Artikel updated successfully.');
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreArtikelRequest $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Artikel $artikel)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Artikel $artikel)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateArtikelRequest $request, Artikel $artikel)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Artikel $artikel)
+    {
+        //
     }
 }
